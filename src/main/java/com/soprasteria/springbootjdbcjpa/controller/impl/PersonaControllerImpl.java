@@ -68,7 +68,6 @@ public class PersonaControllerImpl implements PersonaController {
 		Integer mese = dataImmatricolazione.getMese();
 		Integer giorno = dataImmatricolazione.getGiorno();
 		LocalDate date = LocalDate.of(anno, mese, giorno);
-		System.out.println(date.getYear());
 		return new ResponseEntity<Object>(personaService.sqlLeftJoin(date), HttpStatus.OK);
 	}
 

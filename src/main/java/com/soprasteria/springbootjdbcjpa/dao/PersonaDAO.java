@@ -10,10 +10,12 @@ public interface PersonaDAO {
 
 	public List<PersonaMacchinaDTO> criteriaLeftJoin(LocalDate date);
 
-	public List<Persona> sqlLeftJoin(LocalDate date);
+	public List<PersonaMacchinaDTO> sqlLeftJoin(LocalDate date);
 	
 	public Persona savePersona(Persona persona);
 	
 	public List<Persona> findListaPersone();
+	
+	public List<PersonaMacchinaDTO> findNativeQuery(LocalDate date);
 
 }

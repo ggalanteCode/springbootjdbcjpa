@@ -12,7 +12,7 @@ public interface PersonaService {
 	
 	public Persona createPersona(Persona persona);
 	
-	public List<Persona> sqlLeftJoin(LocalDate date);
+	public List<PersonaMacchinaDTO> sqlLeftJoin(LocalDate date);
 	
 	public List<PersonaMacchinaDTO> criteriaLeftJoin(LocalDate date);
 

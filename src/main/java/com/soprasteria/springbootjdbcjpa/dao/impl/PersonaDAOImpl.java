@@ -1,5 +1,6 @@
 package com.soprasteria.springbootjdbcjpa.dao.impl;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -44,7 +45,8 @@ public class PersonaDAOImpl implements PersonaDAO {
 				pRoot.get("cognome"),
 				macchinaJoin.get("marca"),
 				macchinaJoin.get("modello"),
-				macchinaJoin.get("targa")));
+				macchinaJoin.get("targa"),
+				macchinaJoin.get("annoImmatricolazione")));
 		Predicate onCond = cb.greaterThan(macchinaJoin.get("annoImmatricolazione"), date);
 		macchinaJoin.on(onCond);
 		
@@ -54,15 +56,15 @@ public class PersonaDAOImpl implements PersonaDAO {
 		return resList;
 	}
 	
-	//SQL NATIVE QUERY LEFT JOIN
+	//JPQL QUERY LEFT JOIN
 	@Override
-	public List<Persona> sqlLeftJoin(LocalDate date) {
-		Query query = entityManager.createNativeQuery("SELECT persona.nome, persona.cognome, macchina.marca, macchina.modello, macchina.targa "
-				+ "FROM persona "
-				+ "LEFT OUTER JOIN macchina ON "
-				+ "persona.id = macchina.id_persona AND macchina.anno_immatricolazione > ?;");
+	public List<PersonaMacchinaDTO> sqlLeftJoin(LocalDate date) {
+		Query query = entityManager.createQuery("SELECT new com.soprasteria.springbootjdbcjpa.dto.PersonaMacchinaDTO(p.nome, p.cognome, m.marca, m.modello, m.targa, m.annoImmatricolazione) "
+				+ "FROM Persona p "
+				+ "LEFT OUTER JOIN p.macchine m ON "
+				+ "m.annoImmatricolazione > ?1");
 		query.setParameter(1, date);
-		List<Persona> resList = query.getResultList();
+		List<PersonaMacchinaDTO> resList = query.getResultList();
 		return resList;
 	}
 
@@ -71,7 +73,8 @@ public class PersonaDAOImpl implements PersonaDAO {
 		// TODO Auto-generated method stub
 		return entityManager.merge(persona);
 	}
-
+	
+	
 	@Override
 	public List<Persona> findListaPersone() {
 		// TODO Auto-generated method stub
@@ -81,6 +84,32 @@ public class PersonaDAOImpl implements PersonaDAO {
         CriteriaQuery<Persona> all = cq.select(rootEntry);
         TypedQuery<Persona> allQuery = entityManager.createQuery(all);
         return allQuery.getResultList();
+	}
+	
+	//NATIVE SQL QUERY LEFT JOIN
+	@Override
+	public List<PersonaMacchinaDTO> findNativeQuery(LocalDate date) {
+		// TODO Auto-generated method stub
+		System.out.println("CHIAMATO METODO NATIVE QUERY");
+		Query query = entityManager.createNativeQuery("SELECT p.nome, p.cognome, m.marca, m.modello, m.targa, m.anno_immatricolazione, m.cc "
+				+ "				 FROM persona as p "
+				+ "				LEFT OUTER JOIN macchina as m ON "
+				+ "				p.id = m.id_persona AND (m.anno_immatricolazione > ?) ");
+		query.setParameter(1, date);
+		//QUELLI RESTITUITI SONO ARRAY DI Object, NON LISTE...
+		List<Object[]> resultList = query.getResultList();
+		System.out.println("RESULT LIST "+resultList);
+		List<PersonaMacchinaDTO> dtoList = resultList.stream().map(
+				o -> new PersonaMacchinaDTO(
+					(String)o[0],
+					(String)o[1],
+					(String)o[2],
+					(String)o[3],
+					(String)o[4],
+					(Date)o[5],
+					(Integer)o[6])
+		).toList();
+		return dtoList;
 	}
 
 }

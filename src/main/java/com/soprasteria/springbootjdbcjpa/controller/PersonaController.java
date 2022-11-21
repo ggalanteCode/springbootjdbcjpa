@@ -1,7 +1,10 @@
 package com.soprasteria.springbootjdbcjpa.controller;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 
+import com.soprasteria.springbootjdbcjpa.dto.PersonaMacchinaDTO;
 import com.soprasteria.springbootjdbcjpa.entity.DataImmatricolazione;
 import com.soprasteria.springbootjdbcjpa.entity.Persona;
 
@@ -17,7 +20,7 @@ public interface PersonaController {
 
 	public ResponseEntity<Object> deletePersona(Integer pId);
 	
-	public ResponseEntity<Object> leftJoinWithSQL(DataImmatricolazione dataImmatricolazione);
+	public ResponseEntity<List<PersonaMacchinaDTO>> leftJoinWithSQL(DataImmatricolazione dataImmatricolazione);
 	
 	public ResponseEntity<Object> leftJoinWithCriteria(DataImmatricolazione dataImmatricolazione);
 

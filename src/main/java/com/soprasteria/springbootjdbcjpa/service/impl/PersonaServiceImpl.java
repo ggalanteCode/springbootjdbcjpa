@@ -30,9 +30,9 @@ public class PersonaServiceImpl implements PersonaService {
 	}
 
 	@Override
-	public List<Persona> sqlLeftJoin(LocalDate date) {
+	public List<PersonaMacchinaDTO> sqlLeftJoin(LocalDate date) {
 		// TODO Auto-generated method stub
-		return personaDAO.sqlLeftJoin(date);
+		return personaDAO.findNativeQuery(date);
 	}
 
 	@Override

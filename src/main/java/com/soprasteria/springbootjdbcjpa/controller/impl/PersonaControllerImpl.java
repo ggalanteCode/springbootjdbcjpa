@@ -1,6 +1,7 @@
 package com.soprasteria.springbootjdbcjpa.controller.impl;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.soprasteria.springbootjdbcjpa.controller.PersonaController;
+import com.soprasteria.springbootjdbcjpa.dto.PersonaMacchinaDTO;
 import com.soprasteria.springbootjdbcjpa.entity.DataImmatricolazione;
 import com.soprasteria.springbootjdbcjpa.entity.Persona;
 import com.soprasteria.springbootjdbcjpa.service.PersonaService;
@@ -66,13 +68,15 @@ public class PersonaControllerImpl implements PersonaController {
 
 	@Override
 	@GetMapping("/leftJoinSQL")
-	public ResponseEntity<Object> leftJoinWithSQL(@RequestBody DataImmatricolazione dataImmatricolazione) {
+	public ResponseEntity<List<PersonaMacchinaDTO>> leftJoinWithSQL(@RequestBody DataImmatricolazione dataImmatricolazione) {
 		// TODO Auto-generated method stub
 		Integer anno = dataImmatricolazione.getAnno();
 		Integer mese = dataImmatricolazione.getMese();
 		Integer giorno = dataImmatricolazione.getGiorno();
 		LocalDate date = LocalDate.of(anno, mese, giorno);
-		return new ResponseEntity<Object>(personaService.sqlLeftJoin(date), HttpStatus.OK);
+		List<PersonaMacchinaDTO> sqlLeftJoin = personaService.sqlLeftJoin(date);
+		System.out.println("TEST");
+		return new ResponseEntity<List<PersonaMacchinaDTO>>(sqlLeftJoin, HttpStatus.OK);
 	}
 
 	@Override

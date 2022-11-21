@@ -31,8 +31,11 @@ public class Macchina {
 	@Column(nullable = false)
 	private String targa;
 	
-	@Column(name = "anno_immatricolazione", nullable = false)
+	@Column(nullable = false)
 	private LocalDate annoImmatricolazione;
+	
+	@Column(nullable = false)
+	private Integer cc;
 	
 	@ManyToOne
 	@JoinColumn(nullable = false, name = "id_persona")

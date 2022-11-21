@@ -59,6 +59,10 @@ public class PersonaControllerImpl implements PersonaController {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	/*
+	 * ENTRAMBE LE LEFT JOIN VENGONO FATTE TRAMITE IL CONTROLLER DI PERSONA
+	 */
 
 	@Override
 	@GetMapping("/leftJoinSQL")

@@ -46,7 +46,8 @@ public class PersonaDAOImpl implements PersonaDAO {
 				macchinaJoin.get("marca"),
 				macchinaJoin.get("modello"),
 				macchinaJoin.get("targa"),
-				macchinaJoin.get("annoImmatricolazione")));
+				macchinaJoin.get("annoImmatricolazione"),
+				macchinaJoin.get("cc")));
 		Predicate onCond = cb.greaterThan(macchinaJoin.get("annoImmatricolazione"), date);
 		macchinaJoin.on(onCond);
 		

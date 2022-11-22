@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.soprasteria.springbootjdbcjpa.controller.PersonaController;
 import com.soprasteria.springbootjdbcjpa.dto.PersonaMacchinaDTO;
+import com.soprasteria.springbootjdbcjpa.dto.PersonaMacchinaDTO2;
 import com.soprasteria.springbootjdbcjpa.entity.DataImmatricolazione;
 import com.soprasteria.springbootjdbcjpa.entity.Persona;
 import com.soprasteria.springbootjdbcjpa.service.PersonaService;
@@ -81,13 +82,13 @@ public class PersonaControllerImpl implements PersonaController {
 
 	@Override
 	@GetMapping("/leftJoinCriteria")
-	public ResponseEntity<Object> leftJoinWithCriteria(@RequestBody DataImmatricolazione dataImmatricolazione) {
+	public ResponseEntity<List<PersonaMacchinaDTO2>> leftJoinWithCriteria(@RequestBody DataImmatricolazione dataImmatricolazione) {
 		// TODO Auto-generated method stub
 		Integer anno = dataImmatricolazione.getAnno();
 		Integer mese = dataImmatricolazione.getMese();
 		Integer giorno = dataImmatricolazione.getGiorno();
 		LocalDate date = LocalDate.of(anno, mese, giorno);
-		return new ResponseEntity<Object>(personaService.criteriaLeftJoin(date), HttpStatus.OK);
+		return new ResponseEntity<List<PersonaMacchinaDTO2>>(personaService.criteriaLeftJoin(date), HttpStatus.OK);
 	}
 
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.soprasteria.springbootjdbcjpa.dao.PersonaDAO;
 import com.soprasteria.springbootjdbcjpa.dto.PersonaMacchinaDTO;
+import com.soprasteria.springbootjdbcjpa.dto.PersonaMacchinaDTO2;
 import com.soprasteria.springbootjdbcjpa.entity.Persona;
 import com.soprasteria.springbootjdbcjpa.service.PersonaService;
 
@@ -36,7 +37,7 @@ public class PersonaServiceImpl implements PersonaService {
 	}
 
 	@Override
-	public List<PersonaMacchinaDTO> criteriaLeftJoin(LocalDate date) {
+	public List<PersonaMacchinaDTO2> criteriaLeftJoin(LocalDate date) {
 		// TODO Auto-generated method stub
 		return personaDAO.criteriaLeftJoin(date);
 	}

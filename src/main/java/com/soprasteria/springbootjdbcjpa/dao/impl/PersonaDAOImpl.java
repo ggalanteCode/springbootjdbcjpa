@@ -20,6 +20,7 @@ import org.springframework.stereotype.Repository;
 
 import com.soprasteria.springbootjdbcjpa.dao.PersonaDAO;
 import com.soprasteria.springbootjdbcjpa.dto.PersonaMacchinaDTO;
+import com.soprasteria.springbootjdbcjpa.dto.PersonaMacchinaDTO2;
 import com.soprasteria.springbootjdbcjpa.entity.Macchina;
 import com.soprasteria.springbootjdbcjpa.entity.Persona;
 
@@ -32,15 +33,15 @@ public class PersonaDAOImpl implements PersonaDAO {
 	
 	//CRITERIA LEFT JOIN
 	@Override
-	public List<PersonaMacchinaDTO> criteriaLeftJoin(LocalDate date) {
+	public List<PersonaMacchinaDTO2> criteriaLeftJoin(LocalDate date) {
 		// TODO Auto-generated method stub
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-		CriteriaQuery<PersonaMacchinaDTO> cq = cb.createQuery(PersonaMacchinaDTO.class);
+		CriteriaQuery<PersonaMacchinaDTO2> cq = cb.createQuery(PersonaMacchinaDTO2.class);
 		Root<Persona> pRoot = cq.from(Persona.class);
 		Join<Persona, Macchina> macchinaJoin = pRoot.join("macchine", JoinType.LEFT);
 		
 		//DTO PROJECTION
-		cq.select(cb.construct(PersonaMacchinaDTO.class,
+		cq.select(cb.construct(PersonaMacchinaDTO2.class,
 				pRoot.get("nome"),
 				pRoot.get("cognome"),
 				macchinaJoin.get("marca"),
@@ -52,8 +53,8 @@ public class PersonaDAOImpl implements PersonaDAO {
 		macchinaJoin.on(onCond);
 		
 		//EXECUTE THE QUERY
-		TypedQuery<PersonaMacchinaDTO> query = entityManager.createQuery(cq);
-		List<PersonaMacchinaDTO> resList = query.getResultList();	//QUI VIENE FATTA LA SELECT CON LEFT JOIN
+		TypedQuery<PersonaMacchinaDTO2> query = entityManager.createQuery(cq);
+		List<PersonaMacchinaDTO2> resList = query.getResultList();	//QUI VIENE FATTA LA SELECT CON LEFT JOIN
 		return resList;
 	}
 	
